@@ -20,6 +20,9 @@ var Mole = /** @class */ (function () {
         this._hitState.url = "img/mouse_hit_" + this.type + ".png";
         this._normalState.y = this._downY;
         this._normalState.visible = true;
+        Laya.Tween.to(this._normalState, { y: this._upY }, 500, Laya.Ease.backOut, Laya.Handler.create(this, this.showComplete));
+    };
+    Mole.prototype.showComplete = function () {
     };
     return Mole;
 }());
