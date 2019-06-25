@@ -23,6 +23,16 @@ var Mole = /** @class */ (function () {
         Laya.Tween.to(this._normalState, { y: this._upY }, 500, Laya.Ease.backOut, Laya.Handler.create(this, this.showComplete));
     };
     Mole.prototype.showComplete = function () {
+        if (this.isShow && !this.isHit) {
+            Laya.timer.once(2000, this, this.hide);
+        }
+    };
+    Mole.prototype.hide = function () {
+        if (this.isShow && !this.isHit) {
+            this.isShow = false;
+            // this._normalState.visible=false;
+            Laya.Tween.to(this._normalState, { y: this._downY }, 300, Laya.Ease.backIn, Laya.Handler.create(this, this.reset));
+        }
     };
     return Mole;
 }());
