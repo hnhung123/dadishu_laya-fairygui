@@ -1,20 +1,23 @@
 class Mole{
     private _normalState:fairygui.GLoader;
     private _hitState:fairygui.GLoader;
+    private _score:fairygui.GLoader;
     private _downY:number;
     private _upY:number;
+    private _scoreY:number;
     private isAction: boolean;
     private isHit: boolean;
     private isShow: boolean;
     private type: number;
-    private _score:fairygui.GLoader;
+    
 
     constructor(normalState:fairygui.GLoader,hitState:fairygui.GLoader,downY:number,score:fairygui.GLoader){
         this._normalState=normalState;
         this._hitState=hitState;
+        this._score=score;
         this._downY=downY;
         this._upY=normalState.y;
-        this._score=score;
+        this._scoreY=score.y;
         this.reset();
         this._normalState.on(Laya.Event.MOUSE_DOWN,this,this.hit)
     }
@@ -62,6 +65,9 @@ class Mole{
     }
     showScore():void{
         this._score.visible=true;
-        
+        this._score.y=this._scoreY+30;
+        this._score.scaleX=0;
+        this._score.scaleY=0;
+        Laya.Tween.to(this._score,{y:this._scoreY,scaleX:1,scaleY:1},300,Laya.Ease.backOut)       
     }
 }
