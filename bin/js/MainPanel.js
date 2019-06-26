@@ -10,7 +10,7 @@ var MainPanel = /** @class */ (function () {
         this.moles = new Array();
         for (var i = 0; i < this.moleNum; i++) {
             this._coms = this._view.getChild("Mole" + i).asCom;
-            var mole = new Mole(this._coms.getChild("normal").asLoader, this._coms.getChild("hit").asLoader, 24);
+            var mole = new Mole(this._coms.getChild("normal").asLoader, this._coms.getChild("hit").asLoader, 24, this._coms.getChild("score1").asLoader);
             this.moles.push(mole);
         }
     }
