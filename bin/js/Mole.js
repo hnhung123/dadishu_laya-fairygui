@@ -5,10 +5,14 @@ var Mole = /** @class */ (function () {
         this._downY = downY;
         this._upY = normalState.y;
         this.reset();
+        this._normalState.on(Laya.Event.MOUSE_DOWN, this, this.hit);
     }
     Mole.prototype.reset = function () {
         this._normalState.visible = false;
         this._hitState.visible = false;
+        this.isAction = false;
+        this.isShow = false;
+        this.isHit = false;
     };
     Mole.prototype.show = function () {
         if (this.isAction)
@@ -25,13 +29,22 @@ var Mole = /** @class */ (function () {
     Mole.prototype.showComplete = function () {
         if (this.isShow && !this.isHit) {
             Laya.timer.once(2000, this, this.hide);
+            console.log(this.hide);
         }
     };
     Mole.prototype.hide = function () {
         if (this.isShow && !this.isHit) {
             this.isShow = false;
-            // this._normalState.visible=false;
             Laya.Tween.to(this._normalState, { y: this._downY }, 300, Laya.Ease.backIn, Laya.Handler.create(this, this.reset));
+        }
+    };
+    Mole.prototype.hit = function () {
+        if (this.isShow && !this.isHit) {
+            this.isHit = true;
+            this.isShow = false;
+            this._normalState.visible = false;
+            this._hitState.visible = true;
+            Laya.timer.once(500, this, this.reset);
         }
     };
     return Mole;
