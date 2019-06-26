@@ -1,11 +1,12 @@
 var Mole = /** @class */ (function () {
-    function Mole(normalState, hitState, downY, score) {
+    function Mole(normalState, hitState, downY, score, hitCallBack) {
         this._normalState = normalState;
         this._hitState = hitState;
         this._score = score;
         this._downY = downY;
         this._upY = normalState.y;
         this._scoreY = score.y;
+        this.hitCallBack = hitCallBack;
         this.reset();
         this._normalState.on(Laya.Event.MOUSE_DOWN, this, this.hit);
     }
@@ -33,7 +34,6 @@ var Mole = /** @class */ (function () {
     Mole.prototype.showComplete = function () {
         if (this.isShow && !this.isHit) {
             Laya.timer.once(2000, this, this.hide);
-            console.log(this.hide);
         }
     };
     Mole.prototype.hide = function () {
@@ -50,6 +50,7 @@ var Mole = /** @class */ (function () {
             this._hitState.visible = true;
             Laya.timer.once(500, this, this.reset);
             this.showScore();
+            this.hitCallBack.runWith(this.type);
         }
     };
     Mole.prototype.showScore = function () {

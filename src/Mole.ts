@@ -9,17 +9,18 @@ class Mole{
     private isHit: boolean;
     private isShow: boolean;
     private type: number;
-    
+    private hitCallBack:Laya.Handler;
 
-    constructor(normalState:fairygui.GLoader,hitState:fairygui.GLoader,downY:number,score:fairygui.GLoader){
+    constructor(normalState:fairygui.GLoader,hitState:fairygui.GLoader,downY:number,score:fairygui.GLoader,hitCallBack:Laya.Handler){
         this._normalState=normalState;
         this._hitState=hitState;
         this._score=score;
         this._downY=downY;
         this._upY=normalState.y;
         this._scoreY=score.y;
+        this.hitCallBack=hitCallBack;
         this.reset();
-        this._normalState.on(Laya.Event.MOUSE_DOWN,this,this.hit)
+        this._normalState.on(Laya.Event.MOUSE_DOWN,this,this.hit);
     }
     reset():void{
         this._normalState.visible=false;
@@ -44,7 +45,6 @@ class Mole{
     showComplete():void{
         if(this.isShow && !this.isHit){
             Laya.timer.once(2000,this,this.hide);
-            console.log(this.hide)
         }
     }
     hide():void{
@@ -61,6 +61,7 @@ class Mole{
             this._hitState.visible=true;
             Laya.timer.once(500,this,this.reset);
             this.showScore();
+            this.hitCallBack.runWith(this.type);
         }
     }
     showScore():void{
