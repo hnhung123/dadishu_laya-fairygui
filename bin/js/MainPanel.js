@@ -33,8 +33,9 @@ var MainPanel = /** @class */ (function () {
         Laya.timer.clear(this, this.onLoop);
         console.log("GameOver");
     };
-    MainPanel.prototype.setScore = function () {
-        this.score += (this.type == 1 ? -100 : 100);
+    MainPanel.prototype.setScore = function (type) {
+        this.score += (type == 1 ? -100 : 100);
+        console.log("score", this.score, type);
         if (this.score < 0)
             this.score = 0;
         this._view.getChild("score").text = "" + this.score;
