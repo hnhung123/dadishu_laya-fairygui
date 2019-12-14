@@ -15,6 +15,10 @@ var MainPanel = /** @class */ (function () {
             var mole = new Mole(this._coms.getChild("normal").asLoader, this._coms.getChild("hit").asLoader, 24, this._coms.getChild("score1").asLoader, hitCallBack);
             this.moles.push(mole);
         }
+        ;
+        this.hammer = new Hammer(this._view);
+        this.hammer.start();
+        this.hammer.addView();
     }
     MainPanel.prototype.onLoop = function () {
         this._progressBar.value -= 1;

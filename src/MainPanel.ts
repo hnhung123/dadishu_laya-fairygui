@@ -6,6 +6,7 @@ class MainPanel{
     private moleNum:number=9;
     private score:number;
     private type:number;
+    private hammer:Hammer;
     constructor(){
         this._view=fairygui.UIPackage.createObject("hitMole","back").asCom;
         this._view.setSize(fairygui.GRoot.inst.width,fairygui.GRoot.inst.height);
@@ -20,7 +21,10 @@ class MainPanel{
             this._coms=this._view.getChild("Mole"+i).asCom;
             var mole:Mole=new Mole(this._coms.getChild("normal").asLoader,this._coms.getChild("hit").asLoader,24,this._coms.getChild("score1").asLoader,hitCallBack)
             this.moles.push(mole)
-        }
+        };
+        this.hammer = new Hammer (this._view);
+        this.hammer.start();
+        this.hammer.addView();
     }
     onLoop():void{
         this._progressBar.value-=1;
